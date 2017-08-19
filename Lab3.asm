@@ -1,0 +1,38 @@
+;Class:CSE 313 Machine Organization Lab
+;Term:Fall 2016
+;Name(s): Steven Tang and Andrew Hedy
+;Group 9
+;Lab#3: Days of the week
+;Description: In this lab, we're going to read a users input and output a response depending on what the user entered.
+;The user will input a number from 0-6 that will correspond to different days of the week. If the user enters 0, the 
+;program will output the string "Sunday". If the user inputs 1, the program will output the string "Monday" and so on.
+;If the user were to input anything other than 0-6, the program will print nothing.
+
+    .ORIG x3100
+    LEA R0, GREET  
+    PUTS		;Outputs our greeting message to the command prompt
+    GETC		;Gets the users input SINGLE CHARACATER
+    ADD R3, R0, #0
+    ADD R3, R3, #-16
+    ADD R3, R3, #-16
+    ADD R3, R3, #-16    ;Subtracted -16 3 times because the most we can add is 5 bits.
+    LEA R0, DAYS        ;Stores address of whatever day to R0
+    ADD R3, R3, #0
+LOOP
+    BRz DISPLAY
+    ADD R0, R0, #10
+    ADD R3, R3, #-1
+    BR LOOP
+DISPLAY PUTS
+    HALT
+
+    GREET .STRINGZ "Please enter number: "
+    DAYS  
+        .STRINGZ "Sunday   "
+        .STRINGZ "Monday   "
+        .STRINGZ "Tuesday  "
+        .STRINGZ "Wednesday"
+        .STRINGZ "Thursday "
+        .STRINGZ "Friday   "
+        .STRINGZ "Saturday "
+    .END
